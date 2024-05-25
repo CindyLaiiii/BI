@@ -1,0 +1,141 @@
+from pyvis.network import Network
+from IPython.core.display import HTML, display
+import networkx as nx
+
+# Create a directed graph
+graph = nx.DiGraph()
+
+# Define colors for specific groups
+group1_color = "#FF76CE"  # 粉
+group2_color = "#A3D8FF"  # 藍
+group3_color = "#94FFD8"  # 綠
+
+# Add nodes with labels and colors
+group1_nodes = [
+    {"id": "石虎", "label": "石虎", "title": "季風亞洲,豹紋"},
+    {"id": "非洲野貓", "label": "非洲野貓", "title": "非洲,沙棕色"},
+    {"id": "歐洲野貓", "label": "歐洲野貓", "title": "歐洲,毛髮厚重"},
+    {"id": "長毛貓", "label": "長毛貓", "title": "歐洲,毛髮厚重"},
+    {"id": "短毛貓", "label": "短毛貓", "title": "歐洲,毛髮厚重"},
+]  
+group2_nodes = [
+    {"id": "波斯貓", "label": "波斯貓", "title": "伊朗,圓短,長毛,棕眼"},
+    {"id": "暹羅貓", "label": "暹羅貓", "title": "泰國,細長,短毛,重點色,藍眼"},
+    {"id": "美國短毛貓", "label": "美國短毛貓", "title": "美國,圓短,黑白條紋,短毛"},
+    {"id": "英國短毛貓", "label": "英國短毛貓", "title": "英國,微圓短,短毛,藍色,橙眼"},
+    {"id": "俄羅斯藍貓", "label": "俄羅斯藍貓", "title": "俄羅斯,細長,短毛,藍色,綠眼"},
+    {"id": "埃及貓", "label": "埃及貓", "title": "是唯一天然豹紋的家貓,細長,短毛,豹紋"},
+    {"id": "加拿大無毛貓", "label": "加拿大無毛貓", "title": "基因突變,細長,無毛"},
+    {"id": "阿比西尼亞貓", "label": "阿比西尼亞貓", "title": "埃及,細長,短毛,豹紋"},
+    {"id": "曼島貓", "label": "曼島貓", "title": "圓短,短毛,短尾"},
+    {"id": "威爾斯貓", "label": "威爾斯貓", "title": "圓短,長毛,短尾"}
+]  
+group3_nodes = [
+    {"id": "緬甸貓", "label": "緬甸貓", "title": "緬甸,長而結實,長毛,重點色,藍眼"},
+    {"id": "喜馬拉雅貓", "label": "喜馬拉雅貓", "title": "圓短,長毛,重點色,藍眼"},
+    {"id": "布偶貓", "label": "布偶貓", "title": "圓短,長毛,黑金,藍眼"},
+    {"id": "異國短毛貓", "label": "異國短毛貓", "title": "圓短,中等,藍眼"},
+    {"id": "曼赤肯貓", "label": "曼赤肯貓", "title": "美國,中等,突變,短腿"},
+    {"id": "蘇格蘭摺耳貓", "label": "蘇格蘭摺耳貓", "title": "突變,中等,短毛"},
+    {"id": "孟加拉貓", "label": "孟加拉貓", "title": "美國,細長,唯一具有野生貓科動物血統,金色,豹紋"},
+    {"id": "虎斑貓", "label": "虎斑貓", "title": "前額上有獨特的「M」形標記"},
+    {"id": "小步舞曲貓", "label": "小步舞曲貓", "title": "短腿,長毛"},
+    {"id": "緬因貓", "label": "緬因貓", "title": "美國,圓大,長毛"},
+    {"id": "西伯利亞貓", "label": "西伯利亞貓", "title": "俄羅斯國貓,圓短,長毛"},
+    {"id": "挪威森林貓", "label": "挪威森林貓", "title": "挪威,圓大,半長毛"},
+    {"id": "加州閃亮貓", "label": "加州閃亮貓", "title": "細長,短毛,豹紋"}
+]
+for node in group1_nodes:
+    graph.add_node(node["id"], label=node["label"], title=node.get("title", ""), color=group1_color)
+
+for node in group2_nodes:
+    graph.add_node(node["id"], label=node["label"], title=node.get("title", ""), color=group2_color)
+
+for node in group3_nodes:
+    graph.add_node(node["id"], label=node["label"], title=node.get("title", ""), color=group3_color)
+
+# Add edges with labels
+edges = [
+    ("波斯貓", "喜馬拉雅貓", "混種"),
+    ("暹羅貓", "喜馬拉雅貓", "混種"),
+    ("波斯貓", "緬甸貓", "混種"),
+    ("暹羅貓", "緬甸貓", "混種"),
+    ("波斯貓", "布偶貓", "混種"),
+    ("緬甸貓", "布偶貓", "混種"),
+    ("波斯貓", "異國短毛貓", "混種"),
+    ("美國短毛貓", "異國短毛貓", "混種"),
+    ("異國短毛貓", "蘇格蘭摺耳貓", "混種"),
+    ("美國短毛貓", "蘇格蘭摺耳貓", "混種"),
+    ("英國短毛貓", "蘇格蘭摺耳貓", "混種"),
+    ("石虎", "孟加拉貓", "混種"),
+    ("埃及貓", "孟加拉貓", "混種"),
+    ("波斯貓", "小步舞曲貓", "混種"),
+    ("曼赤肯貓", "小步舞曲貓", "混種"),
+    ("非洲野貓", "埃及貓", "後裔"),
+    ("非洲野貓", "虎斑貓", "後裔"),
+    ("美國短毛貓", "緬因貓", "混種"),
+    ("長毛貓", "緬因貓", "混種"),
+    ("西伯利亞貓", "緬因貓", "近親"),
+    ("挪威森林貓", "緬因貓", "近親"),
+    ("美國短毛貓", "英國短毛貓", "近親"),
+    ("非洲野貓", "歐洲野貓", "近親"),
+    ("長毛貓", "挪威森林貓", "混種"),
+    ("短毛貓", "挪威森林貓", "混種"),
+    ("阿比西尼亞貓", "加州閃亮貓", "混種"),
+    ("英國短毛貓", "加州閃亮貓", "混種"),
+    ("美國短毛貓", "加州閃亮貓", "混種"),
+    ("長毛貓", "威爾斯貓", "混種"),
+    ("曼島貓", "威爾斯貓", "混種"),
+]
+
+for edge in edges:
+    graph.add_edge(edge[0], edge[1], label=edge[2])
+
+# Initialize Pyvis network
+nt = Network("1000px", "800px", notebook=True, heading='Science', cdn_resources='in_line')
+
+# Import the networkx graph
+nt.from_nx(graph)
+
+# Set physics and configure options
+nt.set_options("""
+{
+  "nodes": {
+    "font": {
+      "size": 16
+    }
+  },
+  "edges": {
+    "font": {
+      "size": 12
+    },
+    "arrows": {
+      "to": {
+        "enabled": true,
+        "scaleFactor": 1.5
+      }
+    }
+  },
+  "physics": {
+    "enabled": true
+  },
+  "interaction": {
+    "hover": true
+  }
+}
+""")
+
+# Generate and display the HTML content directly
+nt.show("graph.html")
+
+with open("graph.html", "r") as file:
+    html_content = file.read()
+
+display(HTML(html_content))
+
+# Save the graph as an HTML file
+nt.save_graph("graph.html")
+
+# Use the following Python code to download the HTML file if you are in Colab
+from google.colab import files
+files.download('graph.html')
