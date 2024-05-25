@@ -15,7 +15,7 @@ group1_nodes = [
     {"id": "石虎", "label": "石虎", "title": "季風亞洲,豹紋"},
     {"id": "非洲野貓", "label": "非洲野貓", "title": "非洲,沙棕色"},
     {"id": "歐洲野貓", "label": "歐洲野貓", "title": "歐洲,毛髮厚重"},
-]  
+]
 group2_nodes = [
     {"id": "波斯貓", "label": "波斯貓", "title": "伊朗,圓短,長毛,棕眼"},
     {"id": "暹羅貓", "label": "暹羅貓", "title": "泰國,細長,短毛,重點色,藍眼"},
@@ -27,7 +27,7 @@ group2_nodes = [
     {"id": "阿比西尼亞貓", "label": "阿比西尼亞貓", "title": "埃及,細長,短毛,豹紋"},
     {"id": "曼島貓", "label": "曼島貓", "title": "圓短,短毛,短尾"},
     {"id": "威爾斯貓", "label": "威爾斯貓", "title": "圓短,長毛,短尾"}
-]  
+]
 group3_nodes = [
     {"id": "長毛貓", "label": "長毛貓", "title": "歐洲,毛髮厚重"},
     {"id": "短毛貓", "label": "短毛貓", "title": "歐洲,毛髮厚重"},
@@ -132,9 +132,12 @@ legend_html = """
   <p><span style="background-color: #FF76CE; padding: 5px; border: 1px solid black;"></span>野貓</p>
   <p><span style="background-color: #A3D8FF; padding: 5px; border: 1px solid black;"></span>純種家貓</p>
   <p><span style="background-color: #94FFD8; padding: 5px; border: 1px solid black;"></span>混種家貓</p>
- 
+
 </div>
 """
+
+nt.show("graph.html")
+
 # Load the generated HTML and insert the legend
 with open("graph.html", "r") as file:
     html_content = file.read()
