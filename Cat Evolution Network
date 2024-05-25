@@ -15,8 +15,6 @@ group1_nodes = [
     {"id": "石虎", "label": "石虎", "title": "季風亞洲,豹紋"},
     {"id": "非洲野貓", "label": "非洲野貓", "title": "非洲,沙棕色"},
     {"id": "歐洲野貓", "label": "歐洲野貓", "title": "歐洲,毛髮厚重"},
-    {"id": "長毛貓", "label": "長毛貓", "title": "歐洲,毛髮厚重"},
-    {"id": "短毛貓", "label": "短毛貓", "title": "歐洲,毛髮厚重"},
 ]  
 group2_nodes = [
     {"id": "波斯貓", "label": "波斯貓", "title": "伊朗,圓短,長毛,棕眼"},
@@ -31,6 +29,8 @@ group2_nodes = [
     {"id": "威爾斯貓", "label": "威爾斯貓", "title": "圓短,長毛,短尾"}
 ]  
 group3_nodes = [
+    {"id": "長毛貓", "label": "長毛貓", "title": "歐洲,毛髮厚重"},
+    {"id": "短毛貓", "label": "短毛貓", "title": "歐洲,毛髮厚重"},
     {"id": "緬甸貓", "label": "緬甸貓", "title": "緬甸,長而結實,長毛,重點色,藍眼"},
     {"id": "喜馬拉雅貓", "label": "喜馬拉雅貓", "title": "圓短,長毛,重點色,藍眼"},
     {"id": "布偶貓", "label": "布偶貓", "title": "圓短,長毛,黑金,藍眼"},
@@ -92,7 +92,7 @@ for edge in edges:
     graph.add_edge(edge[0], edge[1], label=edge[2])
 
 # Initialize Pyvis network
-nt = Network("1000px", "800px", notebook=True, heading='Science', cdn_resources='in_line')
+nt = Network("1000px", "1000px",notebook=True, cdn_resources='in_line')
 
 # Import the networkx graph
 nt.from_nx(graph)
@@ -125,17 +125,28 @@ nt.set_options("""
 }
 """)
 
-# Generate and display the HTML content directly
-nt.show("graph.html")
-
+# Add a legend to the HTML
+legend_html = """
+<div style="position: absolute; top: 10px; left: 10px; padding: 5px;">
+  <h3 style="margin: 5px;"> Cat Evolution Network</h3>
+  <p><span style="background-color: #FF76CE; padding: 5px; border: 1px solid black;"></span>野貓</p>
+  <p><span style="background-color: #A3D8FF; padding: 5px; border: 1px solid black;"></span>純種家貓</p>
+  <p><span style="background-color: #94FFD8; padding: 5px; border: 1px solid black;"></span>混種家貓</p>
+ 
+</div>
+"""
+# Load the generated HTML and insert the legend
 with open("graph.html", "r") as file:
     html_content = file.read()
 
-display(HTML(html_content))
+html_with_legend = html_content.replace('</body>', legend_html + '</body>')
 
-# Save the graph as an HTML file
-nt.save_graph("graph.html")
+with open("graph.html", "w") as file:
+    file.write(html_with_legend)
 
-# Use the following Python code to download the HTML file if you are in Colab
+# Display the updated HTML
+display(HTML(html_with_legend))
+
+# Download the HTML file
 from google.colab import files
 files.download('graph.html')
