@@ -1,0 +1,28 @@
+To display a network graph generated with the pyvis library in a Jupyter Notebook, you need to make use of the show method provided by pyvis. 
+This method creates an HTML file and opens it in a web browser, or it can be embedded directly in a Jupyter Notebook.
+
+Here is an example of how to create and display a network graph using pyvis:
+1.Install pyvis: pip install pyvis
+
+2.Create and display the network graph:
+
+from pyvis.network import Network
+from IPython.core.display import display, HTML
+
+# Create a network
+net = Network()
+
+# Add nodes and edges
+net.add_node(1, label='Node 1')
+net.add_node(2, label='Node 2')
+net.add_edge(1, 2)
+
+# Generate the HTML file
+net.show('graph.html')
+
+# Display the HTML file in Jupyter Notebook
+with open('graph.html', 'r') as file:
+    html_content = file.read()
+
+display(HTML(html_content))
+
